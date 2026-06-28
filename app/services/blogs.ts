@@ -37,3 +37,9 @@ export const addBlog = (title: string, author: string, url: string) => {
     url
   })
 }
+
+export const getBlogById = (id: number) => {
+  const blog = blogs.find((blog) => blog.id === id)
+
+  return blog
+}
