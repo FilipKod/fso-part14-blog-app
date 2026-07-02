@@ -12,5 +12,5 @@ export default function NewBlog() {
         <button type="submit">Create Blog</button>
       </form>
     </div>
-  )
+  );
 }

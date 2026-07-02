@@ -4,29 +4,29 @@ const blogs = [
     title: "title1",
     author: "author1",
     url: "https://google.com",
-    likes: 5
+    likes: 5,
   },
   {
     id: 2,
     title: "title2",
     author: "author2",
     url: "https://google.com",
-    likes: 1
+    likes: 1,
   },
   {
     id: 3,
     title: "title3",
     author: "author3",
     url: "https://google.com",
-    likes: 12
+    likes: 12,
   },
-]
+];
 
-let nextId = 4
+let nextId = 4;
 
 export const getBlogs = () => {
-  return blogs
-}
+  return blogs;
+};
 
 export const addBlog = (title: string, author: string, url: string) => {
   blogs.push({
@@ -34,12 +34,20 @@ export const addBlog = (title: string, author: string, url: string) => {
     likes: 0,
     title,
     author,
-    url
-  })
-}
+    url,
+  });
+};
 
 export const getBlogById = (id: number) => {
-  const blog = blogs.find((blog) => blog.id === id)
+  const blog = blogs.find((blog) => blog.id === id);
 
-  return blog
-}
+  return blog;
+};
+
+export const likeBlogById = (id: number) => {
+  const blog = blogs.find((blog) => blog.id === id);
+
+  if (blog) {
+    blog.likes += 1;
+  }
+};
