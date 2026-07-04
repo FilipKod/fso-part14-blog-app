@@ -20,10 +20,8 @@ export default function RootLayout({
           {" | "}
           <Link href={"/blogs/new"}>Create Blog</Link>
         </header>
-        <div>
-          {children}
-        </div>
-        <footer style={{marginTop: 50}}>
+        <div>{children}</div>
+        <footer style={{ marginTop: 50 }}>
           <span>Created by Filip Madunicky</span>
         </footer>
       </body>
