@@ -8,13 +8,9 @@ export default async function Blogs({
   searchParams: Promise<{ filter?: string }>;
 }) {
   const { filter } = await searchParams;
-  const blogs = getBlogs();
+  const blogs = await getBlogs(filter);
 
-  const filteredBlogs = filter
-    ? blogs.filter((blog) => blog.title.includes(filter))
-    : blogs;
-
-  const sortedBlogs = filteredBlogs.sort((a, b) => b.likes - a.likes);
+  const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes);
 
   return (
     <div>
