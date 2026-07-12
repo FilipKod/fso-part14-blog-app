@@ -6,8 +6,23 @@ import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
 
+type ErrorStateBlog = {
+  title?: string;
+  author?: string;
+  url?: string;
+};
+
+export type FormStateBlog = {
+  errors: ErrorStateBlog;
+  values: {
+    title: string;
+    author: string;
+    url: string;
+  };
+};
+
 export const createBlog = async (
-  prevState: { error: string },
+  prevState: FormStateBlog,
   formData: FormData,
 ) => {
   const session = await getServerSession(authOptions);
@@ -20,16 +35,22 @@ export const createBlog = async (
   const author = formData.get("author") as string;
   const url = formData.get("url") as string;
 
+  const errors: ErrorStateBlog = {};
+
   if (!title || title.length < 5) {
-    return { error: "Title must be at least 5 characters long" };
+    errors.title = "Title must be at least 5 characters long";
   }
 
   if (!author || author.length < 5) {
-    return { error: "Author must be at least 5 characters long" };
+    errors.author = "Author must be at least 5 characters long";
   }
 
   if (!url || url.length < 5) {
-    return { error: "Url must be at least 5 characters long" };
+    errors.url = "Url must be at least 5 characters long";
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return { errors, values: { title, author, url } };
   }
 
   await addBlog(title, author, url);
