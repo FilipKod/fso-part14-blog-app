@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import AuthSessionProvider from "./components/SessionProvider";
+import NavBar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
   title: "Blog App",
@@ -13,19 +15,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <header>
-          <Link href={"/"}>Home</Link>
-          {" | "}
-          <Link href={"/blogs"}>Blogs</Link>
-          {" | "}
-          <Link href={"/users"}>Users</Link>
-          {" | "}
-          <Link href={"/blogs/new"}>Create Blog</Link>
-        </header>
-        <div>{children}</div>
-        <footer style={{ marginTop: 50 }}>
-          <span>Created by Filip Madunicky</span>
-        </footer>
+        <AuthSessionProvider>
+          <NavBar />
+          <div>{children}</div>
+          <Footer />
+        </AuthSessionProvider>
       </body>
     </html>
   );

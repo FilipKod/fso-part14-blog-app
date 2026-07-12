@@ -3,8 +3,16 @@
 import { redirect } from "next/navigation";
 import { addBlog, likeBlogById } from "../services/blogs";
 import { revalidatePath } from "next/cache";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth";
 
 export const createBlog = async (formData: FormData) => {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.email) {
+    redirect("/login");
+  }
+
   const title = formData.get("title") as string;
   const author = formData.get("author") as string;
   const url = formData.get("url") as string;

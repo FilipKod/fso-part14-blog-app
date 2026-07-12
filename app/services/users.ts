@@ -14,3 +14,11 @@ export const getUserWithBlogs = async (username: string) => {
     },
   });
 };
+
+export const registerUser = async (
+  username: string,
+  name: string,
+  hash: string,
+) => {
+  await db.insert(users).values({ username, name, passwordHash: hash });
+};
