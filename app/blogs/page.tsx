@@ -14,28 +14,40 @@ export default async function Blogs({
 
   return (
     <div>
-      <h2>Blogs</h2>
+      <h2 className="text-2xl font-bold text-center">Blogs</h2>
 
-      <form action={searchBlog}>
-        <label>
-          <input type="text" name="filter" />
+      <form action={searchBlog} className="flex my-8">
+        <label className="grow-[4]">
+          <input
+            type="text"
+            name="filter"
+            className="bg-white border-2 border-amber-400 rounded-md w-full"
+          />
         </label>
-        <button type="submit">Search</button>
+        <button
+          type="submit"
+          className="bg-emerald-600 rounded-md py-1 px-3 text-sm uppercase font-bold text-gray-100 ml-2 grow-[1]"
+        >
+          Search
+        </button>
       </form>
 
       {sortedBlogs.map((blog) => (
-        <div key={blog.id}>
+        <div
+          key={blog.id}
+          className="rounded-md bg-amber-100 my-7 first-of-type:mt-5 last-of-type:mb-0 p-5 shadow-md"
+        >
           <Link href={`/blogs/${blog.id}`}>
-            <h3 style={{ marginBottom: 5, textTransform: "uppercase" }}>
-              {blog.title}
-            </h3>
+            <h3 className="mb-3 uppercase font-bold">{blog.title}</h3>
           </Link>
-          <div>Author: {blog.author}</div>
-          <div>
-            Url: <a href={blog.url}>{blog.url}</a>
+          <div className="text-gray-700">Author: {blog.author}</div>
+          <div className="my-1">
+            Url:{" "}
+            <a href={blog.url} className="underline">
+              {blog.url}
+            </a>
           </div>
           <div>Likes: {blog.likes}</div>
-          <hr />
         </div>
       ))}
     </div>

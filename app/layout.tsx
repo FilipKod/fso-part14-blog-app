@@ -17,12 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="flex flex-col min-h-screen">
         <AuthSessionProvider>
           <NotificationProvider>
             <NavBar />
             <Notification />
-            <div>{children}</div>
+            <main className="grow max-w-2xl m-auto py-5">{children}</main>
             <Footer />
           </NotificationProvider>
         </AuthSessionProvider>

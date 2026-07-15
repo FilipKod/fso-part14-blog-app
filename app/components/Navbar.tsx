@@ -1,34 +1,40 @@
 "use client";
 
-import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
+import NavLink from "./NavLink";
 
 export default function NavBar() {
   const { data: session } = useSession();
 
   return (
-    <header>
-      <Link href={"/"}>Home</Link>
+    <header className="bg-cyan-950 text-white py-3 px-8 flex items-center gap-4">
+      <NavLink href={"/"}>Home</NavLink>
       {" | "}
-      <Link href={"/blogs"}>Blogs</Link>
+      <NavLink href={"/blogs"}>Blogs</NavLink>
       {" | "}
-      <Link href={"/users"}>Users</Link>
-      {session ? (
-        <>
-          {" | "}
-          <Link href={"/blogs/new"}>Create Blog</Link>
-          {" | "}
-          <em>{session.user?.name} logged in</em>
-          <button onClick={() => signOut()}>logout</button>
-        </>
-      ) : (
-        <>
-          {" | "}
-          <Link href={"/login"}>Login</Link>
-          {" | "}
-          <Link href={"/register"}>Register</Link>
-        </>
-      )}
+      <NavLink href={"/users"}>Users</NavLink>
+      <div className="ml-auto flex items-center gap-4">
+        {session ? (
+          <>
+            <NavLink href={"/blogs/new"}>Create Blog</NavLink>
+            {" | "}
+            <em className="text-gray-500">{session.user?.name} logged in</em>
+            <button
+              onClick={() => signOut()}
+              className="bg-amber-800 px-4 py-1 rounded-sm uppercase text-sm font-semibold cursor-pointer hover:bg-amber-950 "
+            >
+              logout
+            </button>
+          </>
+        ) : (
+          <>
+            {" | "}
+            <NavLink href={"/login"}>Login</NavLink>
+            {" | "}
+            <NavLink href={"/register"}>Register</NavLink>
+          </>
+        )}
+      </div>
     </header>
   );
 }
