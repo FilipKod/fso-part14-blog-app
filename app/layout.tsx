@@ -1,7 +1,10 @@
+import "@/app/global.css";
 import type { Metadata } from "next";
 import AuthSessionProvider from "./components/SessionProvider";
 import NavBar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Notification from "./components/Notification";
+import { NotificationProvider } from "./components/NotificationContext";
 
 export const metadata: Metadata = {
   title: "Blog App",
@@ -16,9 +19,12 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AuthSessionProvider>
-          <NavBar />
-          <div>{children}</div>
-          <Footer />
+          <NotificationProvider>
+            <NavBar />
+            <Notification />
+            <div>{children}</div>
+            <Footer />
+          </NotificationProvider>
         </AuthSessionProvider>
       </body>
     </html>
