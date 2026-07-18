@@ -26,7 +26,7 @@ export const addBlogToReadingList = async (blogId: number) => {
   }
 };
 
-export const getReadingListsByUser = async (userId: number) => {
+export const getReadingListsByUser = async (userId: number, read: boolean) => {
   return db
     .select({
       id: readingLists.id,
@@ -37,7 +37,7 @@ export const getReadingListsByUser = async (userId: number) => {
     .from(readingLists)
     .innerJoin(users, eq(readingLists.userId, users.id))
     .innerJoin(blogs, eq(readingLists.blogId, blogs.id))
-    .where(eq(readingLists.userId, userId));
+    .where(and(eq(readingLists.userId, userId), eq(readingLists.read, read)));
 };
 
 export const checkReadingListForLoggedUser = async (blogId: number) => {
@@ -61,4 +61,27 @@ export const checkReadingListForLoggedUser = async (blogId: number) => {
       eq(readingLists.userId, user.id),
     ),
   });
+};
+
+export const changeReadToTrue = async (blogId: number) => {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.email) {
+    throw new Error("not logged in");
+  }
+
+  const user = await db.query.users.findFirst({
+    where: eq(users.username, session.user.email),
+  });
+
+  if (!user) {
+    throw new Error("user not found");
+  }
+
+  await db
+    .update(readingLists)
+    .set({ read: true })
+    .where(
+      and(eq(readingLists.blogId, blogId), eq(readingLists.userId, user.id)),
+    );
 };

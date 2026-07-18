@@ -20,7 +20,7 @@ export default function NavBar() {
             {" | "}
             <NavLink href={"/me"}>me</NavLink>
             <button
-              onClick={() => signOut()}
+              onClick={() => signOut({ callbackUrl: "/", redirect: true })}
               className="bg-amber-800 px-4 py-1 rounded-sm uppercase text-sm font-semibold cursor-pointer hover:bg-amber-950 "
             >
               logout
@@ -28,7 +28,6 @@ export default function NavBar() {
           </>
         ) : (
           <>
-            {" | "}
             <NavLink href={"/login"}>Login</NavLink>
             {" | "}
             <NavLink href={"/register"}>Register</NavLink>

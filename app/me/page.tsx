@@ -6,6 +6,7 @@ import { generateUserTokenAction } from "../actions/users";
 import SubmitTokenButton from "./_components/SubmitTokenButton";
 import { getReadingListsByUser } from "../services/readingList";
 import Link from "next/link";
+import { markAsRead } from "../actions/readingLists";
 
 export default async function MeProfilePage() {
   const session = await getServerSession(authOptions);
@@ -20,7 +21,8 @@ export default async function MeProfilePage() {
     return notFound();
   }
 
-  const readingLists = await getReadingListsByUser(user.id);
+  const unreadList = await getReadingListsByUser(user.id, false);
+  const readedList = await getReadingListsByUser(user.id, true);
 
   return (
     <div className="w-xl rounded-md shadow-lg p-8">
@@ -35,21 +37,43 @@ export default async function MeProfilePage() {
       <hr className="my-3" />
 
       <h3 className="text-xl font-bold my-4">Reading List</h3>
+
+      <h4 className="font-bold">Unread ({unreadList.length})</h4>
       <ul>
-        {readingLists.map((item) => (
+        {unreadList.map((itemUnread) => (
           <li
-            key={item.id}
+            key={itemUnread.id}
             className="bg-amber-100 rounded-md p-3 flex items-center gap-5 my-2 justify-between"
           >
             <Link
-              href={`/blogs/${item.blogId}`}
+              href={`/blogs/${itemUnread.blogId}`}
               className="text-blue-700 hover:underline"
             >
-              {item.title}
+              {itemUnread.title}
             </Link>
-            <button className="bg-green-700 rounded-md py-1 px-3 text-white cursor-pointer shrink-0">
-              mark as read
-            </button>
+            <form action={markAsRead} className="shrink-0">
+              <input type="hidden" name="blogId" value={itemUnread.blogId} />
+              <button className="bg-green-700 rounded-md py-1 px-3 text-white cursor-pointer shrink-0">
+                mark as read
+              </button>
+            </form>
+          </li>
+        ))}
+      </ul>
+
+      <h4 className="font-bold">Read ({readedList.length})</h4>
+      <ul>
+        {readedList.map((itemRead) => (
+          <li
+            key={itemRead.id}
+            className="bg-emerald-50 rounded-md p-3 flex items-center my-2 justify-between"
+          >
+            <Link
+              href={`/blogs/${itemRead.blogId}`}
+              className="text-blue-700 hover:underline"
+            >
+              {itemRead.title}
+            </Link>
           </li>
         ))}
       </ul>
