@@ -2,9 +2,10 @@
 
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
-import { registerUser } from "../services/users";
+import { generateUserToken, registerUser } from "../services/users";
 import { NeonDbError } from "@neondatabase/serverless";
 import { DrizzleError, DrizzleQueryError } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 type RegisterErrorState = {
   username?: string;
@@ -74,4 +75,9 @@ export const createUser = async (
   }
 
   redirect("/login");
+};
+
+export const generateUserTokenAction = async () => {
+  await generateUserToken();
+  revalidatePath("/me");
 };

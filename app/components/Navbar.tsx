@@ -18,7 +18,7 @@ export default function NavBar() {
           <>
             <NavLink href={"/blogs/new"}>Create Blog</NavLink>
             {" | "}
-            <em className="text-gray-500">{session.user?.name} logged in</em>
+            <NavLink href={"/me"}>me</NavLink>
             <button
               onClick={() => signOut()}
               className="bg-amber-800 px-4 py-1 rounded-sm uppercase text-sm font-semibold cursor-pointer hover:bg-amber-950 "
