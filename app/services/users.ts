@@ -37,3 +37,22 @@ export const generateUserToken = async () => {
     .set({ token: crypto.randomUUID() })
     .where(eq(users.username, session.user.email));
 };
+
+export const getUserByToken = async (token: string) => {
+  return db.query.users.findFirst({
+    columns: {
+      token: false,
+      passwordHash: false,
+    },
+    where: eq(users.token, token),
+    with: {
+      createdBlog: {
+        columns: {
+          author: true,
+          title: true,
+          url: true,
+        },
+      },
+    },
+  });
+};

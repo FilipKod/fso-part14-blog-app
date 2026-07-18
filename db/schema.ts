@@ -17,11 +17,12 @@ export const users = pgTable("users", {
   username: varchar("username").notNull().unique(),
   name: varchar("name").notNull(),
   passwordHash: text("password_hash").notNull().default(""),
-  token: text("token"),
+  token: text("token").unique(),
 });
 
 export const usersRelations = relations(users, (r) => ({
   blogs: r.many(blogs),
+  createdBlog: r.many(blogs),
 }));
 
 export const blogsRelations = relations(blogs, (r) => ({
