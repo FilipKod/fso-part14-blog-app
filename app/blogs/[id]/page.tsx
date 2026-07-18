@@ -1,5 +1,7 @@
 import { likeBlog } from "@/app/actions/blogs";
+import { addToReadingList } from "@/app/actions/readingLists";
 import { getBlogById } from "@/app/services/blogs";
+import { checkReadingListForLoggedUser } from "@/app/services/readingList";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -15,6 +17,8 @@ export default async function BlogDetail({
     notFound();
   }
 
+  const readingListCheck = await checkReadingListForLoggedUser(blog.id);
+
   return (
     <div className="rounded-md bg-amber-100 my-7 first-of-type:mt-5 last-of-type:mb-0 p-5 shadow-md">
       <h2 className="text-2xl font-bold text-center">{blog.title}</h2>
@@ -28,14 +32,24 @@ export default async function BlogDetail({
       </div>
 
       <div className="mt-4 text-center">
-        <form action={likeBlog}>
+        <form>
           <input type="hidden" name="blogId" value={blog.id} />
           <button
-            className="bg-emerald-900 rounded-md px-3 py-1.5 font-bold uppercase text-white"
+            formAction={likeBlog}
+            className="bg-emerald-900 rounded-md px-3 py-1.5 font-bold uppercase text-white cursor-pointer"
             type="submit"
           >
             Like ❤️
           </button>
+          {!readingListCheck && (
+            <button
+              formAction={addToReadingList}
+              className="bg-blue-500 rounded-md px-3 py-1.5 ml-4 font-bold uppercase text-white cursor-pointer"
+              type="submit"
+            >
+              Add To Reading List
+            </button>
+          )}
         </form>
       </div>
     </div>
