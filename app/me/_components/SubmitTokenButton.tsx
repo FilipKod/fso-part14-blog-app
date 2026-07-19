@@ -7,6 +7,7 @@ export default function SubmitTokenButton() {
   return (
     <button
       type="submit"
+      data-testid="generate-token-button"
       className={`rounded-md py-2 px-5 text-white ${pending ? "cursor-not-allowed bg-gray-700" : "cursor-pointer bg-blue-700"}`}
       disabled={pending}
     >

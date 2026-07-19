@@ -31,7 +31,9 @@ export default function RegisterPage() {
             />
           </label>
           {state.errors.username && (
-            <p style={{ color: "red" }}>{state.errors.username}</p>
+            <p data-testid="username-error" style={{ color: "red" }}>
+              {state.errors.username}
+            </p>
           )}
         </div>
         <div>
@@ -54,15 +56,19 @@ export default function RegisterPage() {
         </div>
         <div>
           <label>
-            Password Confirm
+            Confirm Password
             <input type="password" name="passwordConfirm" />
           </label>
           {state.errors.passwordConfirm && (
-            <p style={{ color: "red" }}>{state.errors.passwordConfirm}</p>
+            <p data-testid="passwordConfirm-error" style={{ color: "red" }}>
+              {state.errors.passwordConfirm}
+            </p>
           )}
         </div>
         <div>
-          <button type="submit">register</button>
+          <button type="submit" data-testid="register-button">
+            register
+          </button>
         </div>
       </form>
     </div>

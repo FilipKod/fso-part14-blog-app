@@ -37,19 +37,20 @@ export default function NewBlog() {
     <>
       <h2 className="text-2xl font-bold mb-3">Create new blog</h2>
       <form action={formAction} className="flex flex-col w-2xl">
-        <Label label="title" defaultValue={state.values.title} />
+        <Label label="Title" defaultValue={state.values.title} />
         {state.errors.title && (
           <p className="text-red-500 mb-3 ml-27">{state.errors.title}</p>
         )}
-        <Label label="author" defaultValue={state.values.author} />
+        <Label label="Author" defaultValue={state.values.author} />
         {state.errors.author && (
           <p className="text-red-500 mb-3 ml-27">{state.errors.author}</p>
         )}
-        <Label label="url" defaultValue={state.values.url} />
+        <Label label="URL" defaultValue={state.values.url} />
         {state.errors.url && (
           <p className="text-red-500 mb-3 ml-27">{state.errors.url}</p>
         )}
         <button
+          data-testid="create-blog-button"
           type="submit"
           className="rounded-md bg-emerald-700 py-2 px-4 text-white font-bold mt-3 cursor-pointer hover:bg-emerald-800 transition-all"
         >

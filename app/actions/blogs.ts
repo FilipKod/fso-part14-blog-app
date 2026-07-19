@@ -38,15 +38,15 @@ export const createBlog = async (
 
   const errors: ErrorStateBlog = {};
 
-  if (!title || title.length < 5) {
+  if (!title || title.trim().length < 5) {
     errors.title = "Title must be at least 5 characters long";
   }
 
-  if (!author || author.length < 5) {
+  if (!author || author.trim().length < 5) {
     errors.author = "Author must be at least 5 characters long";
   }
 
-  if (!url || url.length < 5) {
+  if (!url || url.trim().length < 5) {
     errors.url = "Url must be at least 5 characters long";
   }
 

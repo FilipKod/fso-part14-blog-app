@@ -11,11 +11,11 @@ export default function Label({ label, defaultValue }: IProps) {
           style={{ textTransform: "capitalize", marginRight: 10 }}
           className="w-1/7"
         >
-          {label}:
+          {label}
         </span>
         <input
           type="text"
-          name={label}
+          name={label.toLowerCase()}
           required
           defaultValue={defaultValue}
           className="grow bg-gray-200 rounded-md px-4 py-2"

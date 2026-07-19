@@ -20,11 +20,18 @@ export default async function BlogDetail({
   const readingListCheck = await checkReadingListForLoggedUser(blog.id);
 
   return (
-    <div className="rounded-md bg-amber-100 my-7 first-of-type:mt-5 last-of-type:mb-0 p-5 shadow-md">
-      <h2 className="text-2xl font-bold text-center">{blog.title}</h2>
+    <div
+      className="rounded-md bg-amber-100 my-7 first-of-type:mt-5 last-of-type:mb-0 p-5 shadow-md"
+      data-testid="blog-detail"
+    >
+      <h2 className="text-2xl font-bold text-center" data-testid="blog-title">
+        {blog.title}
+      </h2>
 
       <div className="text-center my-5">
-        <p className="text-gray-700">{blog.author}</p>
+        <p className="text-gray-700" data-testid="blog-author">
+          {blog.author}
+        </p>
         <Link href={blog.url} className="underline">
           <p>{blog.url}</p>
         </Link>
@@ -46,6 +53,7 @@ export default async function BlogDetail({
               formAction={addToReadingList}
               className="bg-blue-500 rounded-md px-3 py-1.5 ml-4 font-bold uppercase text-white cursor-pointer"
               type="submit"
+              data-testid="add-to-reading-list-button"
             >
               Add To Reading List
             </button>
