@@ -5,6 +5,7 @@ import Label from "./_components/label";
 import { useActionState, useEffect } from "react";
 import { useNotification } from "@/app/components/NotificationContext";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const initialState: FormStateBlog = {
   errors: {},
@@ -16,13 +17,21 @@ export default function NewBlog() {
   const [state, formAction] = useActionState(createBlog, initialState);
   const { showNotify } = useNotification();
   const router = useRouter();
+  const session = useSession();
 
   useEffect(() => {
+    if (session.status !== "loading" && !session.data?.user?.email) {
+      router.push("/login");
+    }
+
     if (state.success) {
       showNotify("blog created");
       router.push("/blogs");
     }
-  }, [state, router, showNotify]);
+  }, [state, router, showNotify, session]);
+
+  if (session.status === "loading") return null;
+  if (!session.data?.user?.email) return null;
 
   return (
     <>

@@ -22,7 +22,9 @@ export default function RootLayout({
           <NotificationProvider>
             <NavBar />
             <Notification />
-            <main className="grow max-w-2xl m-auto py-5">{children}</main>
+            <main className="grow max-w-2xl m-auto py-5 w-full">
+              {children}
+            </main>
             <Footer />
           </NotificationProvider>
         </AuthSessionProvider>
