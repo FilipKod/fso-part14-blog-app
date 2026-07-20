@@ -52,6 +52,9 @@ jobs:
       - name: Run database migrations
         run: npx drizzle-kit push
 
+      - name: Build application
+        run: npm run build
+
       - name: Run Playwright tests
         run: npx playwright test
 
